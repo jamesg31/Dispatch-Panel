@@ -1,6 +1,7 @@
 import * as React from "react";
-import { VariableSizeList as List } from "react-window";
-import Box from "@mui/material/Box";
+import useWindowDimensions from "../hooks/useWindowDimensions";
+import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import DepartmentIcon from "./departmentIcon";
 
 export type Log = {
   id: number;
@@ -9,34 +10,32 @@ export type Log = {
   active: boolean;
 };
 
-const getItemSize = (index: number) => 20;
-
 export default function TransmitLog(props: { logs: Array<Log> }) {
-  const Row = ({
-    index,
-    style,
-  }: {
-    index: number;
-    style: React.CSSProperties;
-  }) => (
-    <div style={style}>
-      {props.logs[props.logs.length - (index + 1)].active
-        ? "Active"
-        : "Inactive"}{" "}
-      :{props.logs[props.logs.length - (index + 1)].nickname}
-    </div>
-  );
+  const listRef = React.useRef(null);
+  const { height, width } = useWindowDimensions();
+  const [maxHeight, setMaxHeight] = React.useState(0);
+
+  React.useEffect(() => {
+    const top = listRef.current.getBoundingClientRect().top;
+    setMaxHeight(height - top - 16);
+  }, [height]);
 
   return (
-    <Box>
-      <List
-        height={150}
-        itemCount={props.logs.length}
-        itemSize={getItemSize}
-        width={300}
-      >
-        {Row}
-      </List>
-    </Box>
+    <List
+      style={{ maxHeight: maxHeight, width: "100%", overflow: "auto" }}
+      ref={listRef}
+    >
+      {props.logs.map((log: Log, i: number) => (
+        <ListItem key={i}>
+          <ListItemIcon>
+            <DepartmentIcon nickname={log.nickname} active={log.active} />
+          </ListItemIcon>
+          <ListItemText
+            primary={log.nickname}
+            sx={{ color: log.active ? "secondary.main" : "text.primary" }}
+          />
+        </ListItem>
+      ))}
+    </List>
   );
 }

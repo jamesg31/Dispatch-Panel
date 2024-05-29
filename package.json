@@ -50,8 +50,7 @@
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.13",
     "@mui/material": "^5.15.18",
-    "electron-squirrel-startup": "^1.0.1",
-    "react-window": "^1.8.10"
+    "electron-squirrel-startup": "^1.0.1"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
