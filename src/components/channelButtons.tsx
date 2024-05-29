@@ -1,6 +1,5 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import { Button, ButtonGroup } from "@mui/material";
 
 export default function ChannelButtons() {
   return (
