@@ -9,18 +9,16 @@ import {
   Switch,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import useFiltersConfig from "../hooks/useFiltersConfig";
+import useStore from "../hooks/useStore";
 
 export const FilterMenu = (props: { value: boolean; onChange: Function }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { filtersConfig, setFiltersConfig } = useFiltersConfig();
+  const { state, setState } = useStore();
   const open = Boolean(anchorEl);
 
   const handleCanHearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.onChange(event.target.checked);
-    setFiltersConfig({
-      canHear: event.target.checked,
-    });
+    setState({ ...state, filters: { canHear: event.target.checked } });
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,7 +40,7 @@ export const FilterMenu = (props: { value: boolean; onChange: Function }) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={filtersConfig.canHear}
+                  checked={state.filters.canHear}
                   onChange={handleCanHearChange}
                 />
               }

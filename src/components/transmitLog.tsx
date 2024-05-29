@@ -10,9 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import DepartmentIcon from "./departmentIcon";
-import { SonoronWebSocketContext } from "../context/sonoronWebSocketContext";
-import useFrequenciesConfig from "../hooks/useFrequenciesConfig";
-import useLocationsConfig from "../hooks/useLocationsConfig";
+import useSonoronWebSocket from "../hooks/useSonoronWebSocket";
+import useStore from "../hooks/useStore";
 import { FilterMenu } from "./filterMenu";
 
 export type Log = {
@@ -30,18 +29,17 @@ export type Game = {
   y: number;
 };
 
-export const TransmitLog = () => {
+const TransmitLog = () => {
   const [logs, setLogs] = React.useState<Array<Log>>([]);
   const [maxHeight, setMaxHeight] = React.useState(0);
   const [canHearChecked, setCanHearChecked] = React.useState(false);
-  const sonoronWebSocket = React.useContext(SonoronWebSocketContext);
+  const sonoronWebSocket = useSonoronWebSocket();
+  const { config } = useStore();
   const listRef = React.useRef(null);
   const { height, width } = useWindowDimensions();
-  const frequencies = useFrequenciesConfig().frequenciesConfig;
-  const locations = useLocationsConfig().locationsConfig;
 
   const getChannel = (xmit: Array<number>): string | undefined => {
-    for (const frequency of frequencies) {
+    for (const frequency of config.frequencies) {
       if (frequency.xmit[0] == xmit[0] && frequency.xmit[1] == xmit[1]) {
         return frequency.name;
       }
@@ -51,7 +49,7 @@ export const TransmitLog = () => {
   const getLocation = (x: number, y: number): string => {
     let closestLocation;
     let closestDistance;
-    for (const location of locations) {
+    for (const location of config.locations) {
       let distance = Math.sqrt(
         Math.pow(x - location.x, 2) + Math.pow(y - location.y, 2)
       );
@@ -111,7 +109,6 @@ export const TransmitLog = () => {
       );
     };
   }, []);
-
   return (
     <Paper variant="outlined" sx={{ width: "100%" }}>
       <Stack direction="row" justifyContent="space-between" sx={{ pl: 1 }}>
@@ -144,7 +141,9 @@ export const TransmitLog = () => {
                       ? " | " + getLocation(log.game.x, log.game.y)
                       : "")
                   }
-                  sx={{ color: log.active ? "secondary.main" : "text.primary" }}
+                  sx={{
+                    color: log.active ? "secondary.main" : "text.primary",
+                  }}
                 />
               </ListItem>
             );
@@ -154,3 +153,5 @@ export const TransmitLog = () => {
     </Paper>
   );
 };
+
+export default TransmitLog;
