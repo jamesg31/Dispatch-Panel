@@ -3,6 +3,7 @@ import Store from "electron-store";
 export type ConfigSchemaType = {
   frequencies: FrequenciesConfig[];
   locations: LocationsConfig[];
+  filters: FiltersConfig;
 };
 
 export type FrequenciesConfig = {
@@ -15,6 +16,10 @@ export type LocationsConfig = {
   name: string;
   x: number;
   y: number;
+};
+
+export type FiltersConfig = {
+  canHear: boolean;
 };
 
 const store = new Store<ConfigSchemaType>({
@@ -258,6 +263,9 @@ const store = new Store<ConfigSchemaType>({
         y: -505,
       },
     ],
+    filters: {
+      canHear: true,
+    },
   },
 });
 
