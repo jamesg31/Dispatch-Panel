@@ -12,7 +12,7 @@ import {
 import DepartmentIcon from "./departmentIcon";
 import useSonoronWebSocket from "../hooks/useSonoronWebSocket";
 import useStore from "../hooks/useStore";
-import { FilterMenu } from "./filterMenu";
+import FilterMenu from "./filterMenu";
 
 export type Log = {
   id: number;

@@ -11,7 +11,7 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useStore from "../hooks/useStore";
 
-export const FilterMenu = (props: { value: boolean; onChange: Function }) => {
+const FilterMenu = (props: { value: boolean; onChange: Function }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { state, setState } = useStore();
   const open = Boolean(anchorEl);
@@ -52,3 +52,5 @@ export const FilterMenu = (props: { value: boolean; onChange: Function }) => {
     </Box>
   );
 };
+
+export default FilterMenu;

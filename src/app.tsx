@@ -19,11 +19,7 @@ declare global {
   }
 }
 
-// get the root element
-const root = createRoot(document.getElementById("root"));
-root.render(<App />);
-
-function App() {
+const App = () => {
   return (
     <StoreContextProvider>
       <SonoronWebSocketProvider>
@@ -40,4 +36,8 @@ function App() {
       </SonoronWebSocketProvider>
     </StoreContextProvider>
   );
-}
+};
+
+// get the root element
+const root = createRoot(document.getElementById("root"));
+root.render(<App />);
