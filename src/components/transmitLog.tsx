@@ -3,12 +3,16 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import DepartmentIcon from "./departmentIcon";
 import { SonoronWebSocketContext } from "../context/sonoronWebSocketContext";
+import { FrequenciesConfig } from "../config";
+import useFrequenciesConfig from "../hooks/useFrequenciesConfig";
 
 export type Log = {
   id: number;
   nickname: string;
   can_hear: boolean;
   active: boolean;
+  xmit: Array<number>;
+  recv: Array<number>;
 };
 
 export default function TransmitLog() {
@@ -17,8 +21,17 @@ export default function TransmitLog() {
   const sonoronWebSocket = React.useContext(SonoronWebSocketContext);
   const listRef = React.useRef(null);
   const { height, width } = useWindowDimensions();
+  const frequencies = useFrequenciesConfig().frequenciesConfig;
 
-  const onSonoronWebSocketMessage = (event: MessageEvent) => {
+  const getChannel = (xmit: Array<number>): string | undefined => {
+    for (const frequency of frequencies) {
+      if (frequency.xmit[0] == xmit[0] && frequency.xmit[1] == xmit[1]) {
+        return frequency.name;
+      }
+    }
+  };
+
+  const onSonoronWebSocketMessage = React.useCallback((event: MessageEvent) => {
     let data = JSON.parse(event.data);
     // if message type client_xmit_change
     if (data.type == "client_xmit_change") {
@@ -30,6 +43,8 @@ export default function TransmitLog() {
               nickname: data.client.nickname,
               can_hear: data.can_hear,
               active: true,
+              xmit: data.client.state.freq_xmit,
+              recv: data.client.state.freq_recv,
             },
             ...prevLogs,
           ];
@@ -42,7 +57,7 @@ export default function TransmitLog() {
         );
       }
     }
-  };
+  }, []);
 
   React.useEffect(() => {
     const top = listRef.current.getBoundingClientRect().top;
@@ -66,12 +81,13 @@ export default function TransmitLog() {
       ref={listRef}
     >
       {logs.map((log: Log, i: number) => (
-        <ListItem key={i}>
+        <ListItem key={i} sx={{ pt: 0, pb: 0, pl: 0.5, pr: 0.5 }}>
           <ListItemIcon>
             <DepartmentIcon nickname={log.nickname} active={log.active} />
           </ListItemIcon>
           <ListItemText
             primary={log.nickname}
+            secondary={getChannel(log.xmit) || "Unknown Channel"}
             sx={{ color: log.active ? "secondary.main" : "text.primary" }}
           />
         </ListItem>

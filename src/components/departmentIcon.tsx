@@ -17,12 +17,12 @@ type Callsign = {
 
 const callsigns: Array<Callsign> = [
   {
-    match: "C-",
+    match: " C-",
     department: "Communications",
     icon: communicationsIcon(),
   },
   {
-    match: "F-",
+    match: " F-",
     department: "Fire",
     icon: fireIcon(),
   },
