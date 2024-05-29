@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import * as React from "react";
 import ChannelButtons from "./components/channelButtons";
-import TransmitLog from "./components/transmitLog";
+import { TransmitLog } from "./components/transmitLog";
 import { Stack } from "@mui/material";
 
 import { SonoronWebSocketProvider } from "./context/sonoronWebSocketContext";
@@ -31,7 +31,6 @@ function App() {
         alignItems={"center"}
         sx={{ m: 1 }}
       >
-        <ChannelButtons />
         <TransmitLog />
       </Stack>
     </SonoronWebSocketProvider>

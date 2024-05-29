@@ -22,6 +22,11 @@ const callsigns: Array<Callsign> = [
     icon: communicationsIcon(),
   },
   {
+    match: " Z-",
+    department: "Communications",
+    icon: communicationsIcon(),
+  },
+  {
     match: " F-",
     department: "Fire",
     icon: fireIcon(),
@@ -55,7 +60,8 @@ export default function DepartmentIcon(props: {
   nickname: string;
   active: boolean;
 }) {
-  const icon = getDepartment(props.nickname).icon || unknownIcon();
+  const department = getDepartment(props.nickname);
+  const icon = department ? department.icon : unknownIcon();
   if (props.active) {
     return <SvgIcon color="secondary">{icon}</SvgIcon>;
   } else {
