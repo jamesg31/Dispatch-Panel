@@ -46,7 +46,7 @@ export default function TransmitLog() {
 
   React.useEffect(() => {
     const top = listRef.current.getBoundingClientRect().top;
-    setMaxHeight(height - top - 16);
+    setMaxHeight(height - top - 24);
   }, [height]);
 
   React.useEffect(() => {

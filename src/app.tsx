@@ -13,7 +13,12 @@ root.render(<App />);
 function App() {
   return (
     <SonoronWebSocketProvider>
-      <Stack spacing={1} direction={"column"} alignItems={"center"}>
+      <Stack
+        spacing={1}
+        direction={"column"}
+        alignItems={"center"}
+        sx={{ m: 1 }}
+      >
         <ChannelButtons />
         <TransmitLog />
       </Stack>
