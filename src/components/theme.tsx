@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import useStore from "../hooks/useStore";
 
 const Theme = (props: React.PropsWithChildren) => {
@@ -12,6 +12,7 @@ const Theme = (props: React.PropsWithChildren) => {
         },
       })}
     >
+      <CssBaseline />
       {props.children}
     </ThemeProvider>
   );

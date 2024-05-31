@@ -1,10 +1,7 @@
 import { createRoot } from "react-dom/client";
-import * as React from "react";
-import ChannelButtons from "./components/channelButtons";
 import TransmitLog from "./components/transmitLog";
 import Theme from "./components/theme";
-import { Stack, ThemeProvider, createTheme } from "@mui/material";
-
+import { Stack, Box } from "@mui/material";
 import { SonoronWebSocketProvider } from "./context/sonoronWebSocketContext";
 import { StoreContextProvider } from "./context/storeContext";
 
@@ -24,14 +21,11 @@ const App = () => {
     <StoreContextProvider>
       <SonoronWebSocketProvider>
         <Theme>
-          <Stack
-            spacing={1}
-            direction={"column"}
-            alignItems={"center"}
-            sx={{ m: 1 }}
-          >
-            <TransmitLog />
-          </Stack>
+          <Box sx={{ p: 1 }}>
+            <Stack spacing={1} direction={"column"} alignItems={"center"}>
+              <TransmitLog />
+            </Stack>
+          </Box>
         </Theme>
       </SonoronWebSocketProvider>
     </StoreContextProvider>
