@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ConfigType, SettingsType, StateType } from "../config";
+import { ConfigType, SettingsType, StateType } from "../../config";
 
 type Store = {
   config: ConfigType;

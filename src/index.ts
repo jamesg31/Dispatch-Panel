@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, globalShortcut, Menu, MenuItem } from "electron";
+import electronLocalShortcut from "electron-localshortcut";
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
 } from "electron-extension-installer";
@@ -17,13 +18,17 @@ import ElectronStore from "electron-store";
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare const SETTINGS_WINDOW_WEBPACK_ENTRY: string;
+declare const SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+let settingsWindow: BrowserWindow | null = null;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
-const createWindow = (): void => {
+const createMainWindow = (): BrowserWindow => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
@@ -38,6 +43,28 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  return mainWindow;
+};
+
+const createSettingsWindow = (parent: BrowserWindow): BrowserWindow => {
+  // Create the browser window.
+  const settingsWindow = new BrowserWindow({
+    height: 600,
+    width: 800,
+    webPreferences: {
+      preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
+    },
+    parent: parent,
+  });
+
+  // and load the index.html of the app.
+  settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
+
+  // Open the DevTools.
+  settingsWindow.webContents.openDevTools();
+
+  return settingsWindow;
 };
 
 // This method will be called when Electron has finished
@@ -51,7 +78,19 @@ app.on("ready", async () => {
       },
     });
   }
-  createWindow();
+
+  const mainWindow = createMainWindow();
+
+  electronLocalShortcut.register("CmdOrCtrl+S", () => {
+    if (settingsWindow) {
+      settingsWindow.focus();
+    } else {
+      settingsWindow = createSettingsWindow(mainWindow);
+      settingsWindow.addListener("close", () => {
+        settingsWindow = null;
+      });
+    }
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -67,7 +106,7 @@ app.on("activate", () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+    createMainWindow();
   }
 });
 
