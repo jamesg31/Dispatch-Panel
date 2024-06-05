@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import DepartmentIcon from "./departmentIcon";
 import useSonoronWebSocket from "../hooks/useSonoronWebSocket";
-import useStore from "../hooks/useStore";
+import useStore from "../../shared/hooks/useStore";
 import FilterMenu from "./filterMenu";
 
 export type Log = {

@@ -1,24 +1,18 @@
 import { Alert, Button } from "@mui/material";
 import * as React from "react";
+import useStore from "../../shared/hooks/useStore";
 
-const SONORON_WEB_SOCKET_URL = "ws://[::1]:33802";
-const sonoronWebSocket = new WebSocket(SONORON_WEB_SOCKET_URL);
-
-export const SonoronWebSocketContext =
-  React.createContext<WebSocket>(sonoronWebSocket);
+export const SonoronWebSocketContext = React.createContext<WebSocket>(null);
 
 export const SonoronWebSocketProvider = (props: React.PropsWithChildren) => {
-  const [ws, setWs] = React.useState<WebSocket>(sonoronWebSocket);
-  const [wsState, setWsState] = React.useState<WebSocket["readyState"]>(
-    sonoronWebSocket.readyState
-  );
+  const { settings } = useStore();
+  const [ws, setWs] = React.useState<WebSocket>();
+  const [wsState, setWsState] = React.useState<WebSocket["readyState"]>();
 
   const connect = () => {
-    setWs(new WebSocket(SONORON_WEB_SOCKET_URL));
+    setWs(new WebSocket(settings.sonoronWebSocketUrl));
     setWsState(ws.readyState);
-  };
 
-  React.useEffect(() => {
     ws.addEventListener("open", () => {
       console.log("Connected to Sonoron Radio Plugin");
       setWsState(ws.readyState);
@@ -28,7 +22,11 @@ export const SonoronWebSocketProvider = (props: React.PropsWithChildren) => {
       console.warn("Connection to Sonoron Radio Plugin lost or failed.");
       setWsState(ws.readyState);
     });
-  }, [ws]);
+  };
+
+  React.useEffect(() => {
+    connect();
+  }, []);
 
   return (
     <SonoronWebSocketContext.Provider value={ws}>
