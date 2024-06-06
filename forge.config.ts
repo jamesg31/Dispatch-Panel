@@ -1,8 +1,6 @@
 import type { ForgeConfig } from "@electron-forge/shared-types";
 import { MakerSquirrel } from "@electron-forge/maker-squirrel";
-import { MakerZIP } from "@electron-forge/maker-zip";
-import { MakerDeb } from "@electron-forge/maker-deb";
-import { MakerRpm } from "@electron-forge/maker-rpm";
+import { MakerDMG } from "@electron-forge/maker-dmg";
 import { AutoUnpackNativesPlugin } from "@electron-forge/plugin-auto-unpack-natives";
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
@@ -14,14 +12,10 @@ import { rendererConfig } from "./webpack.renderer.config";
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    icon: "./src/assets/icon",
   },
   rebuildConfig: {},
-  makers: [
-    new MakerSquirrel({}),
-    new MakerZIP({}, ["darwin"]),
-    new MakerRpm({}),
-    new MakerDeb({}),
-  ],
+  makers: [new MakerSquirrel({}), new MakerDMG({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
@@ -31,8 +25,8 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: "./src/index.html",
-            js: "./src/renderer.ts",
+            html: "./src/main/index.html",
+            js: "./src/main/renderer.ts",
             name: "main_window",
             preload: {
               js: "./src/preload.ts",
@@ -52,6 +46,18 @@ const config: ForgeConfig = {
       [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
+  ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "jamesg31",
+          name: "sonoron-radio-dispatch-ui",
+        },
+        prerelease: true,
+      },
+    },
   ],
 };
 

@@ -56,10 +56,7 @@ const getDepartment = (nickname: string): Callsign | undefined => {
   }
 };
 
-export default function DepartmentIcon(props: {
-  nickname: string;
-  active: boolean;
-}) {
+const DepartmentIcon = (props: { nickname: string; active: boolean }) => {
   const department = getDepartment(props.nickname);
   const icon = department ? department.icon : unknownIcon();
   if (props.active) {
@@ -67,4 +64,6 @@ export default function DepartmentIcon(props: {
   } else {
     return <SvgIcon>{icon}</SvgIcon>;
   }
-}
+};
+
+export default DepartmentIcon;

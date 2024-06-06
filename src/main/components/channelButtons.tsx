@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button, ButtonGroup } from "@mui/material";
 
-export default function ChannelButtons() {
+const ChannelButtons = () => {
   return (
     <ButtonGroup variant="contained" aria-label="outlined primary button group">
       <Button color="secondary">Channel 1</Button>
@@ -9,4 +9,6 @@ export default function ChannelButtons() {
       <Button>Channel 3</Button>
     </ButtonGroup>
   );
-}
+};
+
+export default ChannelButtons;
