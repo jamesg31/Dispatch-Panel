@@ -61,8 +61,10 @@ const createSettingsWindow = (parent: BrowserWindow): BrowserWindow => {
   // and load the index.html of the app.
   settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
 
-  // Open the DevTools.
-  settingsWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV === "development") {
+    // Open the DevTools.
+    settingsWindow.webContents.openDevTools();
+  }
 
   return settingsWindow;
 };

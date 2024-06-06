@@ -1,8 +1,8 @@
 {
   "name": "sonoron-radio-dispatch-ui",
-  "productName": "sonoron-radio-dispatch-ui",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "productName": "Dispatch UI",
+  "version": "0.1.1",
+  "description": "An improved dispatch UI for the Sonoron Radio Teamspeak plugin.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
