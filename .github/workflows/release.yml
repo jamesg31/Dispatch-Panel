@@ -11,27 +11,17 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
+      - run: python3 -m pip install setuptools --break-system-packages
       - name: Github checkout
         uses: actions/checkout@v4
-      - name: Install Apple codesigning certificate
-        env:
-          APPLE_CERTIFICATE: ${{ secrets.CERTIFICATE_OSX_APPLICATION }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
-          APPLE_KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          echo $APPLE_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p $APPLE_KEYCHAIN_PASSWORD build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p $APPLE_KEYCHAIN_PASSWORD build.keychain
-          security import certificate.p12 -k build.keychain -P $APPLE_CERTIFICATE_PASSWORD -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple: -s -k $APPLE_KEYCHAIN_PASSWORD build.keychain
-          rm -fr *.p12
-          security set-keychain-settings -lut 1200 # prevent the keychain to get locked before codesign is done
-      - run: python3 -m pip install setuptools --break-system-packages
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.CERTIFICATE_OSX_APPLICATION }}
+          p12-password: ${{ secrets.CERTIFICATE_PASSWORD }}
       - run: npm ci
       - name: Publish app
         env:
