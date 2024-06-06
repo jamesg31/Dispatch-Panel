@@ -13,7 +13,9 @@ const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
     icon: "./src/assets/icon",
-    osxSign: {},
+    osxSign: {
+      identity: `Developer ID Application: ${process.env.APPLE_IDENTITY!}`,
+    },
     osxNotarize: {
       appleId: process.env.APPLE_ID!,
       appleIdPassword: process.env.APPLE_PASSWORD!,
