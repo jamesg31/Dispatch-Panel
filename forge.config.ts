@@ -14,6 +14,9 @@ const config: ForgeConfig = {
     asar: true,
     icon: "./src/assets/icon",
     osxSign: {
+      // @ts-expect-error
+      gatekeeperAssess: false,
+      hardenedRuntime: true,
       identity: `Developer ID Application: ${process.env.APPLE_IDENTITY!}`,
     },
     osxNotarize: {
