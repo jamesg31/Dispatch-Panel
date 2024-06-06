@@ -26,7 +26,7 @@ jobs:
       - run: npm ci
       - name: Publish app
         env:
-          DEBUG: electron-notarizer
+          DEBUG: electron-forge:*
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -46,4 +46,4 @@ jobs:
       - name: Publish app
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run publish
+        run: npx electron-forge publish
