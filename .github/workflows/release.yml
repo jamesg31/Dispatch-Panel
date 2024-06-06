@@ -11,16 +11,14 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
-      - name: fix permissions
-        run: chmod +x add-osx-cert.sh
+      - name: Github checkout
+        uses: actions/checkout@v4
       - name: Add MacOS certs
-        run: add-osx-cert.sh
+        run: chmod +x add-osx-cert.sh && ./add-osx-cert.sh
         env:
           CERTIFICATE_OSX_APPLICATION: ${{ secrets.CERTIFICATE_OSX_APPLICATION }}
           CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
       - run: python3 -m pip install setuptools --break-system-packages
-      - name: Github checkout
-        uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
