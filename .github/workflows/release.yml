@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-macos:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Github checkout
         uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
       - run: npm ci
       - name: Publish app
         env:
-          DEBUG: "@electron/osx-sign"
+          DEBUG: electron-forge:*
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           APPLE_IDENTITY: ${{ secrets.APPLE_IDENTITY }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
