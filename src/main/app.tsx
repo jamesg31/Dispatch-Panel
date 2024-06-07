@@ -1,10 +1,8 @@
 import { createRoot } from "react-dom/client";
-import TransmitLog from "./components/transmitLog";
-import Channels from "./components/channels";
 import Theme from "../shared/components/theme";
-import { Stack, Box } from "@mui/material";
 import { SonoronWebSocketProvider } from "./context/sonoronWebSocketContext";
 import { StoreContextProvider } from "../shared/context/storeContext";
+import ConfiguredApp from "./components/configuredApp";
 
 declare global {
   interface Window {
@@ -23,12 +21,7 @@ const App = () => {
     <StoreContextProvider>
       <SonoronWebSocketProvider>
         <Theme>
-          <Box sx={{ p: 1 }}>
-            <Stack spacing={1} direction={"column"} alignItems={"center"}>
-              <Channels />
-              <TransmitLog />
-            </Stack>
-          </Box>
+          <ConfiguredApp />
         </Theme>
       </SonoronWebSocketProvider>
     </StoreContextProvider>

@@ -1,7 +1,7 @@
 {
   "name": "sonoron-radio-dispatch-ui",
   "productName": "Dispatch UI",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An improved dispatch UI for the Sonoron Radio Teamspeak plugin.",
   "main": ".webpack/main",
   "scripts": {
