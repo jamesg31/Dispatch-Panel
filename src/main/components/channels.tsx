@@ -10,6 +10,7 @@ import {
   Button,
 } from "@mui/material";
 import useStore from "../../shared/hooks/useStore";
+import useSonoronWebSocket from "../hooks/useSonoronWebSocket";
 import { FrequencyConfig } from "../../config";
 
 const getFrequencies = (frequencies: FrequencyConfig[]) => {
@@ -24,9 +25,49 @@ const getFrequencies = (frequencies: FrequencyConfig[]) => {
 
 const Channels = () => {
   const { config } = useStore();
+  const sonoronWebSocket = useSonoronWebSocket();
   const [mainChannel, setMainChannel] = React.useState<number>(0);
   const [scanChannels, setScanChannels] = React.useState<number[]>([]);
   const [scanActive, setScanActive] = React.useState<boolean>(false);
+
+  const onMainChannelChange = (channel: number) => {
+    sonoronWebSocket.send(
+      JSON.stringify({
+        type: "set_frequencies",
+        freq_recv: config.frequencies[channel].recv,
+        freq_xmit: config.frequencies[channel].xmit,
+      })
+    );
+    setMainChannel(channel);
+  };
+
+  const onScanChannelsChange = (channels: number[]) => {
+    sonoronWebSocket.send(
+      JSON.stringify({
+        type: "set_frequencies_scanned",
+        freqs: channels.map((channel) => config.frequencies[channel].recv),
+      })
+    );
+    setScanChannels(channels);
+  };
+
+  const onScanActiveChange = (active: boolean) => {
+    sonoronWebSocket.send(
+      JSON.stringify({
+        type: "set_scanning_enabled",
+        enabled: active,
+      })
+    );
+    setScanActive(active);
+  };
+
+  React.useEffect(() => {
+    sonoronWebSocket.addEventListener("open", () => {
+      onMainChannelChange(mainChannel);
+      onScanChannelsChange(scanChannels);
+      onScanActiveChange(scanActive);
+    });
+  }, []);
 
   return (
     <Paper variant="outlined" sx={{ width: "100%" }}>
@@ -40,7 +81,7 @@ const Channels = () => {
             label="Main"
             labelId="main-select-label"
             value={mainChannel}
-            onChange={(e) => setMainChannel(e.target.value as number)}
+            onChange={(e) => onMainChannelChange(e.target.value as number)}
           >
             {getFrequencies(config.frequencies)}
           </Select>
@@ -52,7 +93,7 @@ const Channels = () => {
             labelId="scan-select-label"
             multiple
             value={scanChannels}
-            onChange={(e) => setScanChannels(e.target.value as number[])}
+            onChange={(e) => onScanChannelsChange(e.target.value as number[])}
           >
             {getFrequencies(config.frequencies)}
           </Select>
@@ -61,7 +102,7 @@ const Channels = () => {
           sx={{ width: 0.1, m: 1.2, ml: 0.5 }}
           variant="contained"
           color={scanActive ? "secondary" : "primary"}
-          onClick={() => setScanActive(!scanActive)}
+          onClick={() => onScanActiveChange(!scanActive)}
         >
           SCAN
         </Button>
