@@ -9,7 +9,7 @@ import {
   Switch,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import useStore from "../hooks/useStore";
+import useStore from "../../shared/hooks/useStore";
 
 const FilterMenu = (props: { value: boolean; onChange: Function }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
