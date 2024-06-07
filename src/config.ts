@@ -297,6 +297,8 @@ const settingsStore = new Store<SettingsSchemaType>({
     config: {
       theme: "dark",
       sonoronWebSocketUrl: "ws://[::1]:33802",
+      frequenciesSection: true,
+      transmitLogSection: true,
     },
   },
 });

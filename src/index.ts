@@ -56,9 +56,9 @@ const createMainWindow = (): BrowserWindow => {
 const createSettingsWindow = (parent: BrowserWindow): BrowserWindow => {
   // Create the browser window.
   const settingsWindow = new BrowserWindow({
-    height: 280,
+    height: 374,
     width: 300,
-    resizable: true,
+    resizable: false,
     webPreferences: {
       preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },

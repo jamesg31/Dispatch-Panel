@@ -50,8 +50,34 @@ const Settings = () => {
       </FormControl>
       <FormControl>
         <FormLabel>Enabled Sections</FormLabel>
-        <FormControlLabel control={<Checkbox />} label="Frequencies" />
-        <FormControlLabel control={<Checkbox />} label="Transmit Log" />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSettings.frequenciesSection}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  frequenciesSection: e.target.checked,
+                });
+              }}
+            />
+          }
+          label="Frequencies"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSettings.transmitLogSection}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  transmitLogSection: e.target.checked,
+                });
+              }}
+            />
+          }
+          label="Transmit Log"
+        />
       </FormControl>
       <FormControl>
         <FormLabel sx={{ mb: 1 }}>Sonoron Websocket URL</FormLabel>

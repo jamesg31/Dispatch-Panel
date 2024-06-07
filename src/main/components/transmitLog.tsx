@@ -34,7 +34,7 @@ const TransmitLog = () => {
   const [maxHeight, setMaxHeight] = React.useState(0);
   const [canHearChecked, setCanHearChecked] = React.useState(false);
   const sonoronWebSocket = useSonoronWebSocket();
-  const { config } = useStore();
+  const { config, settings } = useStore();
   const listRef = React.useRef(null);
   const { height, width } = useWindowDimensions();
 
@@ -96,7 +96,7 @@ const TransmitLog = () => {
 
   React.useEffect(() => {
     const top = listRef.current.getBoundingClientRect().top;
-    setMaxHeight(height - top - 17);
+    setMaxHeight(height - top - 9);
   }, [height]);
 
   React.useEffect(() => {
