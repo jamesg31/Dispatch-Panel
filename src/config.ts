@@ -16,6 +16,8 @@ export type SettingsSchemaType = {
 export type SettingsType = {
   theme: "dark" | "light";
   sonoronWebSocketUrl: string;
+  frequenciesSection: boolean;
+  transmitLogSection: boolean;
 };
 
 export type StateSchemaType = {

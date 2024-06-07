@@ -6,6 +6,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Button,
+  Checkbox,
   TextField,
   Stack,
 } from "@mui/material";
@@ -25,7 +26,7 @@ const Settings = () => {
   return (
     <Stack spacing={1} sx={{ pl: 1 }} direction={"column"}>
       <FormControl>
-        <FormLabel>Theme</FormLabel>
+        <FormLabel sx={{ mt: 1 }}>Theme</FormLabel>
         <RadioGroup
           name="theme"
           row
@@ -47,17 +48,24 @@ const Settings = () => {
           />
         </RadioGroup>
       </FormControl>
-      <TextField
-        label="Sonoron Websocket URL"
-        variant="outlined"
-        value={selectedSettings.sonoronWebSocketUrl}
-        onChange={(e) =>
-          setSelectedSettings({
-            ...selectedSettings,
-            sonoronWebSocketUrl: e.target.value,
-          })
-        }
-      />
+      <FormControl>
+        <FormLabel>Enabled Sections</FormLabel>
+        <FormControlLabel control={<Checkbox />} label="Frequencies" />
+        <FormControlLabel control={<Checkbox />} label="Transmit Log" />
+      </FormControl>
+      <FormControl>
+        <FormLabel sx={{ mb: 1 }}>Sonoron Websocket URL</FormLabel>
+        <TextField
+          variant="outlined"
+          value={selectedSettings.sonoronWebSocketUrl}
+          onChange={(e) =>
+            setSelectedSettings({
+              ...selectedSettings,
+              sonoronWebSocketUrl: e.target.value,
+            })
+          }
+        />
+      </FormControl>
       <Button onClick={onSave}>Save</Button>
     </Stack>
   );
