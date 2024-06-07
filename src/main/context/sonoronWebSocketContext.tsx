@@ -10,17 +10,19 @@ export const SonoronWebSocketProvider = (props: React.PropsWithChildren) => {
   const [wsState, setWsState] = React.useState<WebSocket["readyState"]>();
 
   const connect = () => {
-    setWs(new WebSocket(settings.sonoronWebSocketUrl));
-    setWsState(ws.readyState);
+    console.log("Connecting to Sonoron Radio Plugin");
+    const webSocket = new WebSocket(settings.sonoronWebSocketUrl);
+    setWs(webSocket);
+    setWsState(webSocket.readyState);
 
-    ws.addEventListener("open", () => {
+    webSocket.addEventListener("open", () => {
       console.log("Connected to Sonoron Radio Plugin");
-      setWsState(ws.readyState);
+      setWsState(webSocket.readyState);
     });
 
-    ws.addEventListener("close", () => {
+    webSocket.addEventListener("close", () => {
       console.warn("Connection to Sonoron Radio Plugin lost or failed.");
-      setWsState(ws.readyState);
+      setWsState(webSocket.readyState);
     });
   };
 
@@ -30,19 +32,25 @@ export const SonoronWebSocketProvider = (props: React.PropsWithChildren) => {
 
   return (
     <SonoronWebSocketContext.Provider value={ws}>
-      {wsState === WebSocket.CLOSED && (
-        <Alert
-          severity="error"
-          action={
-            <Button color="inherit" size="small" onClick={connect}>
-              Reconnect
-            </Button>
-          }
-        >
-          Disconnected from Sonoron Radio Plugin. Is Teamspeak open?
-        </Alert>
+      {ws === undefined ? (
+        <React.Fragment></React.Fragment>
+      ) : (
+        <React.Fragment>
+          {wsState === WebSocket.CLOSED && (
+            <Alert
+              severity="error"
+              action={
+                <Button color="inherit" size="small" onClick={connect}>
+                  Reconnect
+                </Button>
+              }
+            >
+              Disconnected from Sonoron Radio Plugin. Is Teamspeak open?
+            </Alert>
+          )}
+          {props.children}
+        </React.Fragment>
       )}
-      {props.children}
     </SonoronWebSocketContext.Provider>
   );
 };

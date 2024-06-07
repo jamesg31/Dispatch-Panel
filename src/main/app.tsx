@@ -12,6 +12,7 @@ declare global {
         get: (store: string, key: string) => any;
         set: (store: string, key: string, val: any) => void;
       };
+      reload: () => void;
     };
   }
 }
