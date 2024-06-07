@@ -10,4 +10,5 @@ contextBridge.exposeInMainWorld("electron", {
     set: (store: string, property: string, val: Object) =>
       ipcRenderer.invoke("electron-store-set", store, property, val),
   },
+  reload: () => ipcRenderer.invoke("reload"),
 });

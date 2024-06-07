@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
-import useStore from "../hooks/useStore";
+import useStore from "../../shared/hooks/useStore";
 
 const Theme = (props: React.PropsWithChildren) => {
   const { settings } = useStore();

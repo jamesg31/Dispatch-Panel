@@ -18,6 +18,11 @@ import ElectronStore from "electron-store";
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare const SETTINGS_WINDOW_WEBPACK_ENTRY: string;
+declare const SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+let mainWindow: BrowserWindow | null = null;
+let settingsWindow: BrowserWindow | null = null;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -48,6 +53,24 @@ const createMainWindow = (): BrowserWindow => {
   return mainWindow;
 };
 
+const createSettingsWindow = (parent: BrowserWindow): BrowserWindow => {
+  // Create the browser window.
+  const settingsWindow = new BrowserWindow({
+    height: 280,
+    width: 300,
+    resizable: true,
+    webPreferences: {
+      preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
+    },
+    parent: parent,
+  });
+
+  // and load the index.html of the app.
+  settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
+
+  return settingsWindow;
+};
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -60,7 +83,18 @@ app.on("ready", async () => {
     });
   }
 
-  const mainWindow = createMainWindow();
+  mainWindow = createMainWindow();
+
+  electronLocalShortcut.register("CmdOrCtrl+S", () => {
+    if (settingsWindow) {
+      settingsWindow.focus();
+    } else {
+      settingsWindow = createSettingsWindow(mainWindow);
+      settingsWindow.addListener("close", () => {
+        settingsWindow = null;
+      });
+    }
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -101,4 +135,8 @@ ipcMain.handle("electron-store-get", async (_, store, val) => {
 ipcMain.handle("electron-store-set", async (_, store, key, val) => {
   // @ts-ignore
   return getStore(store).set(key, val);
+});
+ipcMain.handle("reload", () => {
+  mainWindow?.reload();
+  settingsWindow?.reload();
 });

@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client";
 import TransmitLog from "./components/transmitLog";
-import Theme from "./components/theme";
+import Theme from "../shared/components/theme";
 import { Stack, Box } from "@mui/material";
 import { SonoronWebSocketProvider } from "./context/sonoronWebSocketContext";
-import { StoreContextProvider } from "./context/storeContext";
+import { StoreContextProvider } from "../shared/context/storeContext";
 
 declare global {
   interface Window {
@@ -12,6 +12,7 @@ declare global {
         get: (store: string, key: string) => any;
         set: (store: string, key: string, val: any) => void;
       };
+      reload: () => void;
     };
   }
 }
