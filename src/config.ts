@@ -5,8 +5,8 @@ export type ConfigSchemaType = {
 };
 
 export type ConfigType = {
-  frequencies: FrequenciesConfig[];
-  locations: LocationsConfig[];
+  frequencies: FrequencyConfig[];
+  locations: LocationConfig[];
 };
 
 export type SettingsSchemaType = {
@@ -26,13 +26,13 @@ export type StateType = {
   filters: FiltersConfig;
 };
 
-export type FrequenciesConfig = {
+export type FrequencyConfig = {
   name: string;
   xmit: Array<number>;
   recv: Array<number>;
 };
 
-export type LocationsConfig = {
+export type LocationConfig = {
   name: string;
   x: number;
   y: number;

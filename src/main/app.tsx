@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import TransmitLog from "./components/transmitLog";
+import Channels from "./components/channels";
 import Theme from "../shared/components/theme";
 import { Stack, Box } from "@mui/material";
 import { SonoronWebSocketProvider } from "./context/sonoronWebSocketContext";
@@ -24,6 +25,7 @@ const App = () => {
         <Theme>
           <Box sx={{ p: 1 }}>
             <Stack spacing={1} direction={"column"} alignItems={"center"}>
+              <Channels />
               <TransmitLog />
             </Stack>
           </Box>
