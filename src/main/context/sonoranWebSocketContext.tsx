@@ -2,26 +2,26 @@ import { Alert, Button } from "@mui/material";
 import * as React from "react";
 import useStore from "../../shared/hooks/useStore";
 
-export const SonoronWebSocketContext = React.createContext<WebSocket>(null);
+export const SonoranWebSocketContext = React.createContext<WebSocket>(null);
 
-export const SonoronWebSocketProvider = (props: React.PropsWithChildren) => {
+export const SonoranWebSocketProvider = (props: React.PropsWithChildren) => {
   const { settings } = useStore();
   const [ws, setWs] = React.useState<WebSocket>();
   const [wsState, setWsState] = React.useState<WebSocket["readyState"]>();
 
   const connect = () => {
-    console.log("Connecting to Sonoron Radio Plugin");
-    const webSocket = new WebSocket(settings.sonoronWebSocketUrl);
+    console.log("Connecting to Sonoran Radio Plugin");
+    const webSocket = new WebSocket(settings.sonoranWebSocketUrl);
     setWs(webSocket);
     setWsState(webSocket.readyState);
 
     webSocket.addEventListener("open", () => {
-      console.log("Connected to Sonoron Radio Plugin");
+      console.log("Connected to Sonoran Radio Plugin");
       setWsState(webSocket.readyState);
     });
 
     webSocket.addEventListener("close", () => {
-      console.warn("Connection to Sonoron Radio Plugin lost or failed.");
+      console.warn("Connection to Sonoran Radio Plugin lost or failed.");
       setWsState(webSocket.readyState);
     });
   };
@@ -31,7 +31,7 @@ export const SonoronWebSocketProvider = (props: React.PropsWithChildren) => {
   }, []);
 
   return (
-    <SonoronWebSocketContext.Provider value={ws}>
+    <SonoranWebSocketContext.Provider value={ws}>
       {ws === undefined ? (
         <React.Fragment></React.Fragment>
       ) : (
@@ -45,12 +45,12 @@ export const SonoronWebSocketProvider = (props: React.PropsWithChildren) => {
                 </Button>
               }
             >
-              Disconnected from Sonoron Radio Plugin. Is Teamspeak open?
+              Disconnected from Sonoran Radio Plugin. Is Teamspeak open?
             </Alert>
           )}
           {props.children}
         </React.Fragment>
       )}
-    </SonoronWebSocketContext.Provider>
+    </SonoranWebSocketContext.Provider>
   );
 };

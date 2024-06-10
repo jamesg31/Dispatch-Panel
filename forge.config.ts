@@ -69,7 +69,7 @@ const config: ForgeConfig = {
       config: {
         repository: {
           owner: "jamesg31",
-          name: "sonoron-radio-dispatch-ui",
+          name: "dispatch-panel",
         },
         prerelease: true,
       },

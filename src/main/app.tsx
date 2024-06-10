@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import Theme from "../shared/components/theme";
-import { SonoronWebSocketProvider } from "./context/sonoronWebSocketContext";
+import { SonoranWebSocketProvider } from "./context/sonoranWebSocketContext";
 import { StoreContextProvider } from "../shared/context/storeContext";
 import ConfiguredApp from "./components/configuredApp";
 
@@ -19,11 +19,11 @@ declare global {
 const App = () => {
   return (
     <StoreContextProvider>
-      <SonoronWebSocketProvider>
+      <SonoranWebSocketProvider>
         <Theme>
           <ConfiguredApp />
         </Theme>
-      </SonoronWebSocketProvider>
+      </SonoranWebSocketProvider>
     </StoreContextProvider>
   );
 };

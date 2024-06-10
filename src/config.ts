@@ -15,7 +15,7 @@ export type SettingsSchemaType = {
 
 export type SettingsType = {
   theme: "dark" | "light";
-  sonoronWebSocketUrl: string;
+  sonoranWebSocketUrl: string;
   frequenciesSection: boolean;
   transmitLogSection: boolean;
 };
@@ -296,7 +296,7 @@ const settingsStore = new Store<SettingsSchemaType>({
   defaults: {
     config: {
       theme: "dark",
-      sonoronWebSocketUrl: "ws://[::1]:33802",
+      sonoranWebSocketUrl: "ws://[::1]:33802",
       frequenciesSection: true,
       transmitLogSection: true,
     },

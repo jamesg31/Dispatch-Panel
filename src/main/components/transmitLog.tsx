@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import DepartmentIcon from "./departmentIcon";
-import useSonoronWebSocket from "../hooks/useSonoronWebSocket";
+import useSonoranWebSocket from "../hooks/useSonoranWebSocket";
 import useStore from "../../shared/hooks/useStore";
 import FilterMenu from "./filterMenu";
 
@@ -33,7 +33,7 @@ const TransmitLog = () => {
   const [logs, setLogs] = React.useState<Array<Log>>([]);
   const [maxHeight, setMaxHeight] = React.useState(0);
   const [canHearChecked, setCanHearChecked] = React.useState(false);
-  const sonoronWebSocket = useSonoronWebSocket();
+  const sonoranWebSocket = useSonoranWebSocket();
   const { config, settings } = useStore();
   const listRef = React.useRef(null);
   const { height, width } = useWindowDimensions();
@@ -61,7 +61,7 @@ const TransmitLog = () => {
     return closestLocation.name;
   };
 
-  const onSonoronWebSocketMessage = React.useCallback((event: MessageEvent) => {
+  const onSonoranWebSocketMessage = React.useCallback((event: MessageEvent) => {
     let data = JSON.parse(event.data);
     // if message type client_xmit_change
     if (data.type == "client_xmit_change") {
@@ -100,12 +100,12 @@ const TransmitLog = () => {
   }, [height]);
 
   React.useEffect(() => {
-    sonoronWebSocket.addEventListener("message", onSonoronWebSocketMessage);
+    sonoranWebSocket.addEventListener("message", onSonoranWebSocketMessage);
 
     return () => {
-      sonoronWebSocket.removeEventListener(
+      sonoranWebSocket.removeEventListener(
         "message",
-        onSonoronWebSocketMessage
+        onSonoranWebSocketMessage
       );
     };
   }, []);

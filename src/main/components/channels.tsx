@@ -10,7 +10,7 @@ import {
   Button,
 } from "@mui/material";
 import useStore from "../../shared/hooks/useStore";
-import useSonoronWebSocket from "../hooks/useSonoronWebSocket";
+import useSonoranWebSocket from "../hooks/useSonoranWebSocket";
 import { FrequencyConfig } from "../../config";
 
 const getFrequencies = (frequencies: FrequencyConfig[]) => {
@@ -25,13 +25,13 @@ const getFrequencies = (frequencies: FrequencyConfig[]) => {
 
 const Channels = () => {
   const { config } = useStore();
-  const sonoronWebSocket = useSonoronWebSocket();
+  const sonoranWebSocket = useSonoranWebSocket();
   const [mainChannel, setMainChannel] = React.useState<number>(0);
   const [scanChannels, setScanChannels] = React.useState<number[]>([]);
   const [scanActive, setScanActive] = React.useState<boolean>(false);
 
   const onMainChannelChange = (channel: number) => {
-    sonoronWebSocket.send(
+    sonoranWebSocket.send(
       JSON.stringify({
         type: "set_frequencies",
         freq_recv: config.frequencies[channel].recv,
@@ -42,7 +42,7 @@ const Channels = () => {
   };
 
   const onScanChannelsChange = (channels: number[]) => {
-    sonoronWebSocket.send(
+    sonoranWebSocket.send(
       JSON.stringify({
         type: "set_frequencies_scanned",
         freqs: channels.map((channel) => config.frequencies[channel].recv),
@@ -52,7 +52,7 @@ const Channels = () => {
   };
 
   const onScanActiveChange = (active: boolean) => {
-    sonoronWebSocket.send(
+    sonoranWebSocket.send(
       JSON.stringify({
         type: "set_scanning_enabled",
         enabled: active,
@@ -62,7 +62,7 @@ const Channels = () => {
   };
 
   React.useEffect(() => {
-    sonoronWebSocket.addEventListener("open", () => {
+    sonoranWebSocket.addEventListener("open", () => {
       onMainChannelChange(mainChannel);
       onScanChannelsChange(scanChannels);
       onScanActiveChange(scanActive);

@@ -80,14 +80,14 @@ const Settings = () => {
         />
       </FormControl>
       <FormControl>
-        <FormLabel sx={{ mb: 1 }}>Sonoron Websocket URL</FormLabel>
+        <FormLabel sx={{ mb: 1 }}>Sonoran Websocket URL</FormLabel>
         <TextField
           variant="outlined"
-          value={selectedSettings.sonoronWebSocketUrl}
+          value={selectedSettings.sonoranWebSocketUrl}
           onChange={(e) =>
             setSelectedSettings({
               ...selectedSettings,
-              sonoronWebSocketUrl: e.target.value,
+              sonoranWebSocketUrl: e.target.value,
             })
           }
         />
