@@ -4,14 +4,9 @@ This project is not affiliated with Sonoran Radio, or Sonoran Software Systems, 
 
 ## Installation
 
-See all releases here.
+Download latest stable release [here](https://github.com/jamesg31/Dispatch-Panel/releases/latest).
 
-Latest Stable Release:
-
-| Operating System | Download     |
-| ---------------- | ------------ |
-| Windows          | [Download]() |
-| MacOS (ARM)      | [Download]() |
+See all releases [here](https://github.com/jamesg31/Dispatch-Panel/releases).
 
 Run the download on your respective operating system. This install the Dispatch Panel.
 
