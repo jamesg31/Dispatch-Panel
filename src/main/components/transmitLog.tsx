@@ -108,7 +108,7 @@ const TransmitLog = () => {
         onSonoranWebSocketMessage
       );
     };
-  }, []);
+  }, [sonoranWebSocket]);
   return (
     <Paper variant="outlined" sx={{ width: "100%" }}>
       <Stack direction="row" justifyContent="space-between" sx={{ pl: 1 }}>

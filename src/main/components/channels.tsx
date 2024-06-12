@@ -12,6 +12,7 @@ import {
 import useStore from "../../shared/hooks/useStore";
 import useSonoranWebSocket from "../hooks/useSonoranWebSocket";
 import { FrequencyConfig } from "../../config";
+import { Controller, Frequency } from "../context/sonoranWebSocketContext";
 
 const getFrequencies = (frequencies: FrequencyConfig[]) => {
   return frequencies.map((frequency: FrequencyConfig, i) => {
@@ -38,7 +39,7 @@ const Channels = () => {
         freq_xmit: config.frequencies[channel].xmit,
       })
     );
-    setMainChannel(channel);
+    //setMainChannel(channel);
   };
 
   const onScanChannelsChange = (channels: number[]) => {
@@ -48,7 +49,6 @@ const Channels = () => {
         freqs: channels.map((channel) => config.frequencies[channel].recv),
       })
     );
-    setScanChannels(channels);
   };
 
   const onScanActiveChange = (active: boolean) => {
@@ -58,15 +58,74 @@ const Channels = () => {
         enabled: active,
       })
     );
-    setScanActive(active);
   };
 
   React.useEffect(() => {
-    sonoranWebSocket.addEventListener("open", () => {
-      onMainChannelChange(mainChannel);
-      onScanChannelsChange(scanChannels);
-      onScanActiveChange(scanActive);
-    });
+    sonoranWebSocket.addEventListener("message", onSonoranWebSocketMessage);
+
+    return () => {
+      sonoranWebSocket.removeEventListener(
+        "message",
+        onSonoranWebSocketMessage
+      );
+    };
+  }, [sonoranWebSocket]);
+
+  const onSonoranWebSocketMessage = React.useCallback((event: MessageEvent) => {
+    let data = JSON.parse(event.data);
+
+    if (data.type === "recv_controllers") {
+      if (data.data.length === 0) {
+        console.warn("No controllers found.");
+        return;
+      }
+      const controller = data.data[0] as Controller;
+      setMainChannel(
+        config.frequencies.findIndex(
+          (frequency) =>
+            frequency.recv[0] == controller.state.freq_recv[0] &&
+            frequency.recv[1] == controller.state.freq_recv[1] &&
+            frequency.xmit[0] == controller.state.freq_xmit[0] &&
+            frequency.xmit[1] == controller.state.freq_xmit[1]
+        )
+      );
+      setScanChannels(
+        config.frequencies
+          .filter((frequency) =>
+            controller.state.freq_scan.some(
+              (freq) =>
+                freq[0] == frequency.recv[0] && freq[1] == frequency.recv[1]
+            )
+          )
+          .map((frequency) => config.frequencies.indexOf(frequency))
+      );
+      setScanActive(controller.state.enable_scan);
+    }
+    if (data.type === "frequencies_updated") {
+      // Update the main channel if it was changed
+      setMainChannel(
+        config.frequencies.findIndex(
+          (frequency) =>
+            frequency.recv[0] == data.freq_recv[0] &&
+            frequency.recv[1] == data.freq_recv[1] &&
+            frequency.xmit[0] == data.freq_xmit[0] &&
+            frequency.xmit[1] == data.freq_xmit[1]
+        )
+      );
+    }
+    if (data.type === "frequencies_scanned_updated") {
+      setScanChannels(
+        config.frequencies
+          .filter((frequency) =>
+            data.freqs.some(
+              (freq: Frequency) =>
+                freq[0] == frequency.recv[0] && freq[1] == frequency.recv[1]
+            )
+          )
+          .map((frequency) => config.frequencies.indexOf(frequency))
+      );
+      setScanActive(data.enabled);
+    }
   }, []);
 
   return (

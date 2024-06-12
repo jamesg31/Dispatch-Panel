@@ -30,8 +30,8 @@ export type StateType = {
 
 export type FrequencyConfig = {
   name: string;
-  xmit: Array<number>;
-  recv: Array<number>;
+  xmit: [number, number];
+  recv: [number, number];
 };
 
 export type LocationConfig = {
