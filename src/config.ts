@@ -1,7 +1,13 @@
 import Store from "electron-store";
 
+export const CONFIG_VERSION = "0.2.4";
+export const LOCATIONS_VERSION = "0.2.4";
+export const SETTINGS_VERSION = "0.2.4";
+export const STATE_VERSION = "0.2.4";
+
 export type ConfigSchemaType = {
   config: ConfigType;
+  version: string;
 };
 
 export type ConfigType = {
@@ -11,10 +17,12 @@ export type ConfigType = {
 
 export type LocationsSchemaType = {
   config: LocationConfig[];
+  version: string;
 };
 
 export type SettingsSchemaType = {
   config: SettingsType;
+  version: string;
 };
 
 export type SettingsType = {
@@ -22,10 +30,12 @@ export type SettingsType = {
   sonoranWebSocketUrl: string;
   frequenciesSection: boolean;
   transmitLogSection: boolean;
+  autoUpdate: string | undefined;
 };
 
 export type StateSchemaType = {
   config: StateType;
+  version: string;
 };
 
 export type StateType = {
@@ -60,6 +70,7 @@ const configStore = new Store<ConfigSchemaType>({
       frequencies: [],
       icons: [],
     },
+    version: CONFIG_VERSION,
   },
 });
 
@@ -238,6 +249,7 @@ const locationsStore = new Store<LocationsSchemaType>({
         y: -505,
       },
     ],
+    version: LOCATIONS_VERSION,
   },
 });
 
@@ -249,7 +261,9 @@ const settingsStore = new Store<SettingsSchemaType>({
       sonoranWebSocketUrl: "ws://[::1]:33802",
       frequenciesSection: true,
       transmitLogSection: true,
+      autoUpdate: true,
     },
+    version: SETTINGS_VERSION,
   },
 });
 
@@ -261,6 +275,7 @@ const stateStore = new Store<StateSchemaType>({
         canHear: true,
       },
     },
+    version: STATE_VERSION,
   },
 });
 
