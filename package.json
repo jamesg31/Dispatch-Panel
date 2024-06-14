@@ -1,7 +1,7 @@
 {
   "name": "dispatch-panel",
   "productName": "Dispatch Panel",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A 3rd party Sonoran Radio Dispatch Panel",
   "main": ".webpack/main",
   "scripts": {

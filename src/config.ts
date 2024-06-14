@@ -6,6 +6,7 @@ export type ConfigSchemaType = {
 
 export type ConfigType = {
   frequencies: FrequencyConfig[];
+  icons: IconConfig[];
 };
 
 export type LocationsSchemaType = {
@@ -43,6 +44,11 @@ export type LocationConfig = {
   y: number;
 };
 
+export type IconConfig = {
+  match: string;
+  department: string;
+};
+
 export type FiltersConfig = {
   canHear: boolean;
 };
@@ -52,6 +58,7 @@ const configStore = new Store<ConfigSchemaType>({
   defaults: {
     config: {
       frequencies: [],
+      icons: [],
     },
   },
 });

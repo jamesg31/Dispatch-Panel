@@ -8,61 +8,36 @@ import {
   unknownIcon,
 } from "./icons/departments";
 import { SvgIcon } from "@mui/material";
-
-type Callsign = {
-  match: string;
-  department: string;
-  icon: React.ReactElement;
-};
-
-const callsigns: Array<Callsign> = [
-  {
-    match: " C-",
-    department: "Communications",
-    icon: communicationsIcon(),
-  },
-  {
-    match: " Z-",
-    department: "Communications",
-    icon: communicationsIcon(),
-  },
-  {
-    match: " F-",
-    department: "Fire",
-    icon: fireIcon(),
-  },
-  {
-    match: "2.-",
-    department: "LSPD",
-    icon: lspdIcon(),
-  },
-  {
-    match: "3.-",
-    department: "BCSO",
-    icon: bcsoIcon(),
-  },
-  {
-    match: "5.-",
-    department: "SAHP",
-    icon: sahpIcon(),
-  },
-];
-
-const getDepartment = (nickname: string): Callsign | undefined => {
-  for (const callsign of callsigns) {
-    if (nickname.match(callsign.match) != null) {
-      return callsign;
-    }
-  }
-};
+import useStore from "../../shared/hooks/useStore";
 
 const DepartmentIcon = (props: { nickname: string; active: boolean }) => {
-  const department = getDepartment(props.nickname);
-  const icon = department ? department.icon : unknownIcon();
+  const { config } = useStore();
+
+  const getIcon = (nickname: string): JSX.Element => {
+    for (const icon of config.icons) {
+      if (nickname.match(icon.match) != null) {
+        if (icon.department == "Communications") return communicationsIcon();
+        else if (icon.department == "Fire") return fireIcon();
+        else if (icon.department == "LSPD") return lspdIcon();
+        else if (icon.department == "BCSO") return bcsoIcon();
+        else if (icon.department == "SAHP") return sahpIcon();
+        else {
+          console.warn(
+            "No icon for department: " +
+              icon.department +
+              ", available departments are (Communications, Fire, LSPD, BCSO, and SAHP)"
+          );
+          return unknownIcon();
+        }
+      }
+    }
+    return unknownIcon();
+  };
+
   if (props.active) {
-    return <SvgIcon color="secondary">{icon}</SvgIcon>;
+    return <SvgIcon color="secondary">{getIcon(props.nickname)}</SvgIcon>;
   } else {
-    return <SvgIcon>{icon}</SvgIcon>;
+    return <SvgIcon>{getIcon(props.nickname)}</SvgIcon>;
   }
 };
 
