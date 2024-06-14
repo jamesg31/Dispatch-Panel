@@ -7,6 +7,8 @@ import { ipcMain } from "electron";
 import {
   ConfigSchemaType,
   configStore,
+  LocationsSchemaType,
+  locationsStore,
   SettingsSchemaType,
   settingsStore,
   StateSchemaType,
@@ -116,9 +118,14 @@ app.on("activate", () => {
 
 const getStore = (
   store: string
-): ElectronStore<ConfigSchemaType | SettingsSchemaType | StateSchemaType> => {
+): ElectronStore<
+  ConfigSchemaType | LocationsSchemaType | SettingsSchemaType | StateSchemaType
+> => {
   if (store === "config") {
     return configStore;
+  }
+  if (store === "locations") {
+    return locationsStore;
   }
   if (store === "settings") {
     return settingsStore;

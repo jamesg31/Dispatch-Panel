@@ -39,7 +39,6 @@ const Channels = () => {
         freq_xmit: config.frequencies[channel].xmit,
       })
     );
-    //setMainChannel(channel);
   };
 
   const onScanChannelsChange = (channels: number[]) => {
