@@ -38,8 +38,6 @@ if (require("electron-squirrel-startup")) {
 }
 
 // @ts-ignore
-console.log(configStore.get("version"));
-// @ts-ignore
 if (configStore.get("version") !== CONFIG_VERSION) {
   console.warn(
     "Config out of date, resetting to defaults. (version " +
@@ -81,7 +79,6 @@ if (stateStore.get("version") !== STATE_VERSION) {
 // if auto-updates are enabled, enable them
 // @ts-ignore
 const settings = settingsStore.get("config");
-console.log(settings);
 if (settings.autoUpdate) {
   updateElectronApp();
 }
@@ -113,7 +110,7 @@ const createMainWindow = (): BrowserWindow => {
 const createSettingsWindow = (parent: BrowserWindow): BrowserWindow => {
   // Create the browser window.
   const settingsWindow = new BrowserWindow({
-    height: 374,
+    height: 443,
     width: 300,
     resizable: false,
     webPreferences: {

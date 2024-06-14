@@ -9,9 +9,11 @@ import {
   Checkbox,
   TextField,
   Stack,
+  Switch,
 } from "@mui/material";
 import useStore from "../../shared/hooks/useStore";
 import { SettingsType } from "../../config";
+import pjson from "../../../package.json";
 
 const Settings = () => {
   const { settings, setSettings } = useStore();
@@ -26,7 +28,26 @@ const Settings = () => {
   return (
     <Stack spacing={1} sx={{ pl: 1 }} direction={"column"}>
       <FormControl>
-        <FormLabel sx={{ mt: 1 }}>Theme</FormLabel>
+        <FormLabel sx={{ mt: 1 }}>Auto Update</FormLabel>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={selectedSettings.autoUpdate}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  autoUpdate: e.target.checked,
+                });
+              }}
+            />
+          }
+          label={`${
+            selectedSettings.autoUpdate ? "Enabled" : "Disabled"
+          } (Current: v${pjson.version})`}
+        />
+      </FormControl>
+      <FormControl>
+        <FormLabel>Theme</FormLabel>
         <RadioGroup
           name="theme"
           row
@@ -82,6 +103,7 @@ const Settings = () => {
       <FormControl>
         <FormLabel sx={{ mb: 1 }}>Sonoran Websocket URL</FormLabel>
         <TextField
+          sx={{ pr: 1 }}
           variant="outlined"
           value={selectedSettings.sonoranWebSocketUrl}
           onChange={(e) =>
