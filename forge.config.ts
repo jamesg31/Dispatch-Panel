@@ -23,7 +23,12 @@ const config: ForgeConfig = {
     },
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerDMG({})],
+  makers: [
+    new MakerSquirrel({
+      signWithParams: `/sha1 ${process.env.WINDOWS_CERT_SHA1} /tr http://time.certum.pl /td sha256 /fd sha256`,
+    }),
+    new MakerDMG({}),
+  ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
