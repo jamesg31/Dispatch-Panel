@@ -30,7 +30,7 @@ export type SettingsType = {
   sonoranWebSocketUrl: string;
   frequenciesSection: boolean;
   transmitLogSection: boolean;
-  autoUpdate: string | undefined;
+  autoUpdate: boolean;
 };
 
 export type StateSchemaType = {
