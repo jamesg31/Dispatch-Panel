@@ -112,8 +112,8 @@ const createSettingsWindow = (parent: BrowserWindow): BrowserWindow => {
   let height, width;
   // if operating system, change window size
   if (process.platform !== "darwin") {
-    height = 500;
-    width = 400;
+    height = 454;
+    width = 350;
   } else {
     height = 443;
     width = 300;
