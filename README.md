@@ -30,6 +30,10 @@ MacOS:
 - In the top bar, click `Go`, then `Library`
 - Navigate to `Application Support`, then `Dispatch Panel`
 
+### Postals
+
+By default, the dispatch panel will use DevBlocky's new postals, which is used by a majority of FiveM communities. To change the postals, please edit the postals.json file located in the configuration folder above.
+
 ## Usage
 
 The Dispatch Panel should automatically connect to Teamspeak 3 if it is open. If not, a banner will appear. To attempt connection again, click "Reconnect".
