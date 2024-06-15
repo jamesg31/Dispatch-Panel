@@ -34,7 +34,7 @@ const TransmitLog = () => {
   const [maxHeight, setMaxHeight] = React.useState(0);
   const [canHearChecked, setCanHearChecked] = React.useState(false);
   const sonoranWebSocket = useSonoranWebSocket();
-  const { config, settings } = useStore();
+  const { config, locations } = useStore();
   const listRef = React.useRef(null);
   const { height, width } = useWindowDimensions();
 
@@ -49,7 +49,7 @@ const TransmitLog = () => {
   const getLocation = (x: number, y: number): string => {
     let closestLocation;
     let closestDistance;
-    for (const location of config.locations) {
+    for (const location of locations) {
       let distance = Math.sqrt(
         Math.pow(x - location.x, 2) + Math.pow(y - location.y, 2)
       );
