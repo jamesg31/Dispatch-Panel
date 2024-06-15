@@ -9,6 +9,7 @@ import {
   configStore,
   LocationsSchemaType,
   locationsStore,
+  postalStore,
   SettingsSchemaType,
   settingsStore,
   StateSchemaType,
@@ -17,6 +18,8 @@ import {
   LOCATIONS_VERSION,
   SETTINGS_VERSION,
   STATE_VERSION,
+  POSTALS_VERSION,
+  PostalsSchemaType,
 } from "./config";
 import ElectronStore from "electron-store";
 import { updateElectronApp } from "update-electron-app";
@@ -57,6 +60,16 @@ if (locationsStore.get("version") !== LOCATIONS_VERSION) {
   );
   // @ts-ignore
   locationsStore.clear();
+}
+// @ts-ignore
+if (postalStore.get("version") !== POSTALS_VERSION) {
+  console.warn(
+    "Postals out of date, resetting to defaults. (version " +
+      POSTALS_VERSION +
+      ")"
+  );
+  // @ts-ignore
+  postalStore.clear();
 }
 // @ts-ignore
 if (settingsStore.get("version") !== SETTINGS_VERSION) {
@@ -184,13 +197,16 @@ app.on("activate", () => {
 const getStore = (
   store: string
 ): ElectronStore<
-  ConfigSchemaType | LocationsSchemaType | SettingsSchemaType | StateSchemaType
+  ConfigSchemaType | LocationsSchemaType| PostalsSchemaType | SettingsSchemaType | StateSchemaType
 > => {
   if (store === "config") {
     return configStore;
   }
   if (store === "locations") {
     return locationsStore;
+  }
+  if (store === "postals") {
+    return postalStore;
   }
   if (store === "settings") {
     return settingsStore;

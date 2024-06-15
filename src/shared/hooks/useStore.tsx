@@ -5,6 +5,7 @@ const useStore = () => {
   const {
     config,
     locations,
+    postals,
     settings,
     state,
     setConfig,
@@ -16,6 +17,7 @@ const useStore = () => {
   return {
     config,
     locations,
+    postals,
     settings,
     state,
     setConfig,

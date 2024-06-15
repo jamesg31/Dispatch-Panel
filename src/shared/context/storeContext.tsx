@@ -3,16 +3,19 @@ import {
   ConfigType,
   SettingsType,
   LocationConfig,
+  PostalConfig,
   StateType,
 } from "../../config";
 
 type Store = {
   config: ConfigType;
   locations: LocationConfig[];
+  postals: PostalConfig[];
   settings: SettingsType;
   state: StateType;
   setConfig: (config: ConfigType) => void;
   setLocations: (locations: LocationConfig[]) => void;
+  setPostals: (postals: PostalConfig[]) => void;
   setSettings: (settings: SettingsType) => void;
   setState: (state: StateType) => void;
 };
@@ -30,6 +33,11 @@ export const StoreContextProvider = (props: React.PropsWithChildren) => {
     window.electron.store.set("config", "config", locations);
   };
 
+  const setPostals = (postals: PostalConfig[]) => {
+    setStore((prev) => ({ ...prev, postals }));
+    window.electron.store.set("config", "config", postals);
+  };
+
   const setSettings = (settings: SettingsType) => {
     setStore((prev) => ({ ...prev, settings }));
     window.electron.store.set("settings", "config", settings);
@@ -43,10 +51,12 @@ export const StoreContextProvider = (props: React.PropsWithChildren) => {
   const [store, setStore] = React.useState<Store>({
     config: null,
     locations: null,
+    postals: null,
     settings: null,
     state: null,
     setConfig: setConfig,
     setLocations: setLocations,
+    setPostals: setPostals,
     setSettings: setSettings,
     setState: setState,
   });
@@ -61,6 +71,11 @@ export const StoreContextProvider = (props: React.PropsWithChildren) => {
         setStore((prev) => ({ ...prev, locations }));
       });
     window.electron.store
+      .get("postals", "config")
+      .then((postals: PostalConfig[]) => {
+        setStore((prev) => ({ ...prev, postals }));
+      });
+    window.electron.store
       .get("settings", "config")
       .then((settings: SettingsType) => {
         setStore((prev) => ({ ...prev, settings }));
@@ -72,7 +87,7 @@ export const StoreContextProvider = (props: React.PropsWithChildren) => {
 
   return (
     <StoreContext.Provider value={store}>
-      {store.config && store.locations && store.settings && store.state ? (
+      {store.config && store.locations && store.postals && store.settings && store.state ? (
         <React.Fragment>{props.children}</React.Fragment>
       ) : (
         <React.Fragment></React.Fragment>
