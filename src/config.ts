@@ -80,11 +80,11 @@ export type FiltersConfig = {
 const configStore = new Store<ConfigSchemaType>({
   name: "config",
   defaults: {
+    version: CONFIG_VERSION,
     config: {
       frequencies: [],
       icons: [],
     },
-    version: CONFIG_VERSION,
   },
 });
 
@@ -101,6 +101,7 @@ const postalStore = new Store<PostalsSchemaType>({
 const settingsStore = new Store<SettingsSchemaType>({
   name: "settings",
   defaults: {
+    version: SETTINGS_VERSION,
     config: {
       theme: "dark",
       sonoranWebSocketUrl: "ws://[::1]:33802",
@@ -108,19 +109,18 @@ const settingsStore = new Store<SettingsSchemaType>({
       transmitLogSection: true,
       autoUpdate: true,
     },
-    version: SETTINGS_VERSION,
   },
 });
 
 const stateStore = new Store<StateSchemaType>({
   name: "state",
   defaults: {
+    version: STATE_VERSION,
     config: {
       filters: {
         canHear: true,
       },
     },
-    version: STATE_VERSION,
   },
 });
 
