@@ -31,17 +31,17 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: npm run publish
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Github checkout
-        uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - name: Publish app
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-forge publish
+  #  build-windows:
+  #    runs-on: windows-latest
+  #    steps:
+  #      - name: Github checkout
+  #        uses: actions/checkout@v4
+  #      - name: Use Node.js
+  #        uses: actions/setup-node@v4
+  #        with:
+  #          node-version: 20
+  #      - run: npm ci
+  #      - name: Publish app
+  #        env:
+  #          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  #        run: npx electron-forge publish
