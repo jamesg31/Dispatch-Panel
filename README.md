@@ -6,6 +6,8 @@ This project is not affiliated with Sonoran Radio, or Sonoran Software Systems, 
 
 ### Install Dispatch Panel
 
+**For Windows, download the file ending in .exe, for MacOS, download the file ending in .dmg.**
+
 Download latest stable release [here](https://github.com/jamesg31/Dispatch-Panel/releases/latest).
 
 See all releases [here](https://github.com/jamesg31/Dispatch-Panel/releases).
