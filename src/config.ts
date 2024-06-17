@@ -5,7 +5,7 @@ import postals from "./configs/postals.json";
 export const CONFIG_VERSION = "0.2.4";
 export const LOCATIONS_VERSION = "0.2.4";
 export const POSTALS_VERSION = "0.3.2";
-export const SETTINGS_VERSION = "0.2.4";
+export const SETTINGS_VERSION = "0.3.3";
 export const STATE_VERSION = "0.3.3";
 
 export type ConfigSchemaType = {
@@ -38,6 +38,10 @@ export type SettingsType = {
   sonoranWebSocketUrl: string;
   frequenciesSection: boolean;
   transmitLogSection: boolean;
+  showTransmitLogIcons: boolean;
+  showTransmitLogLocations: boolean;
+  showTransmitLogPostals: boolean;
+  showTransmitLogTimestamps: boolean;
   autoUpdate: boolean;
 };
 
@@ -106,6 +110,12 @@ const settingsStore = new Store<SettingsSchemaType>({
     config: {
       theme: "dark",
       sonoranWebSocketUrl: "ws://[::1]:33802",
+      frequenciesSection: true,
+      transmitLogSection: true,
+      showTransmitLogIcons: true,
+      showTransmitLogLocations: true,
+      showTransmitLogPostals: true,
+      showTransmitLogTimestamps: true,
       autoUpdate: true,
     },
   },

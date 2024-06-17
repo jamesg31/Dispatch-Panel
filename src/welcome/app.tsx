@@ -24,6 +24,7 @@ const changelog = [
     changes: [
       "This welcome page! It will appear on first open and after each update.",
       "More customizable transmit logs, now inlcuding timestamps if wanted. Can be configured within the settings.",
+      "Improve transmit log spacing around the icon.",
       "Always on top option. This will attempt to force the panel to stay on top of other windows even on focus loss. Can be enabled in the settings.",
       "Reverted electron-builder to v24.9.1 to try to combat antivirus false positives.",
     ],
@@ -72,7 +73,8 @@ const App = () => {
               To open the settings, use the Control + S (Windows), or Command +
               S (MacOS) keybind. This will allow you toggle auto updates, change
               your theme, configure what parts of the panel you want to see, and
-              manage your Sonoran Radio connection.
+              manage your Sonoran Radio connection. When you are done changing
+              settings, make sure to click the save button at the bottom.
             </Typography>
             <Typography>
               I hope you enjoy using the Dispatch Panel. If you have any feature
