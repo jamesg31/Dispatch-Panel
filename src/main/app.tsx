@@ -12,6 +12,7 @@ declare global {
         set: (store: string, key: string, val: any) => void;
       };
       reload: () => void;
+      openConfigDir: () => void;
     };
   }
 }

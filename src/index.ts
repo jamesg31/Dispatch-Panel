@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, Menu, MenuItem } from "electron";
+import { app, BrowserWindow, shell } from "electron";
 import electronLocalShortcut from "electron-localshortcut";
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
@@ -210,6 +210,10 @@ app.on("ready", async () => {
       // @ts-ignore
       stateStore.set("config.lastWelcomeVersion", pjson.version);
     });
+    welcomeWindow.webContents.setWindowOpenHandler(({ url }) => {
+      shell.openExternal(url);
+      return { action: "deny" };
+    });
   }
 });
 
@@ -233,7 +237,11 @@ app.on("activate", () => {
 const getStore = (
   store: string
 ): ElectronStore<
-  ConfigSchemaType | LocationsSchemaType| PostalsSchemaType | SettingsSchemaType | StateSchemaType
+  | ConfigSchemaType
+  | LocationsSchemaType
+  | PostalsSchemaType
+  | SettingsSchemaType
+  | StateSchemaType
 > => {
   if (store === "config") {
     return configStore;
@@ -264,4 +272,7 @@ ipcMain.handle("reload", () => {
   mainWindow?.reload();
   settingsWindow?.reload();
   welcomeWindow?.reload();
+});
+ipcMain.handle("open-config-dir", () => {
+  shell.openPath(app.getPath("userData"));
 });
