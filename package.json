@@ -1,7 +1,7 @@
 {
   "name": "dispatch-panel",
   "productName": "Dispatch Panel",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A 3rd party Sonoran Radio Dispatch Panel",
   "main": ".webpack/main",
   "repository": {
@@ -34,7 +34,7 @@
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
     "css-loader": "^6.11.0",
     "electron": "^30.0.6",
-    "electron-builder": "^25.0.0-alpha.9",
+    "electron-builder": "^24.9.1",
     "electron-extension-installer": "^1.2.0",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",

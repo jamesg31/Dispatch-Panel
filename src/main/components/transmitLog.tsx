@@ -22,6 +22,7 @@ export type Log = {
   xmit: Array<number>;
   recv: Array<number>;
   game?: Game;
+  timestamp: string;
 };
 
 export type Game = {
@@ -34,7 +35,7 @@ const TransmitLog = () => {
   const [maxHeight, setMaxHeight] = React.useState(0);
   const [canHearChecked, setCanHearChecked] = React.useState(false);
   const sonoranWebSocket = useSonoranWebSocket();
-  const { config, locations, postals } = useStore();
+  const { config, locations, postals, settings } = useStore();
   const listRef = React.useRef(null);
   const { height, width } = useWindowDimensions();
 
@@ -81,6 +82,7 @@ const TransmitLog = () => {
     // if message type client_xmit_change
     if (data.type == "client_xmit_change") {
       if (data.xmit_type == "unit_talk_permit") {
+        const date = new Date();
         setLogs((prevLogs) => {
           const newLog = {
             id: data.client.id,
@@ -95,6 +97,9 @@ const TransmitLog = () => {
                   y: data.client.state.game.position[1],
                 }
               : undefined,
+            timestamp: `${("0" + date.getUTCHours()).slice(-2)}:${(
+              "0" + date.getUTCMinutes()
+            ).slice(-2)}z`,
           };
           const updatedLogs = [newLog, ...prevLogs.slice(0, 49)];
           return updatedLogs;
@@ -144,16 +149,29 @@ const TransmitLog = () => {
             return null;
           } else {
             return (
-              <ListItem key={i} sx={{ pt: 0, pb: 0, pl: 0.5, pr: 0.5 }}>
-                <ListItemIcon>
-                  <DepartmentIcon nickname={log.nickname} active={log.active} />
-                </ListItemIcon>
+              <ListItem key={i} sx={{ pt: 0, pb: 0, pl: 1, pr: 0.5 }}>
+                {settings.showTransmitLogIcons ? (
+                  <ListItemIcon sx={{ minWidth: 35 }}>
+                    <DepartmentIcon
+                      nickname={log.nickname}
+                      active={log.active}
+                    />
+                  </ListItemIcon>
+                ) : null}
                 <ListItemText
                   primary={log.nickname}
                   secondary={
                     (getChannel(log.xmit) || "Unknown Channel") +
                     (log.game
-                      ? " | " + getLocation(log.game.x, log.game.y) + " (" + getPostal(log.game.x, log.game.y) + ")"
+                      ? (settings.showTransmitLogLocations
+                          ? " | " + getLocation(log.game.x, log.game.y)
+                          : "") +
+                        (settings.showTransmitLogPostals
+                          ? " (" + getPostal(log.game.x, log.game.y) + ")"
+                          : "")
+                      : "") +
+                    (settings.showTransmitLogTimestamps
+                      ? " | " + log.timestamp
                       : "")
                   }
                   sx={{

@@ -11,4 +11,5 @@ contextBridge.exposeInMainWorld("electron", {
       ipcRenderer.invoke("electron-store-set", store, property, val),
   },
   reload: () => ipcRenderer.invoke("reload"),
+  openConfigDir: () => ipcRenderer.invoke("open-config-dir"),
 });

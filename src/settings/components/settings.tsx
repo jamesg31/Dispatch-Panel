@@ -101,6 +101,82 @@ const Settings = () => {
         />
       </FormControl>
       <FormControl>
+        <FormLabel>Enabled Transmit Log Features</FormLabel>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSettings.showTransmitLogIcons}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  showTransmitLogIcons: e.target.checked,
+                });
+              }}
+            />
+          }
+          label="Icons"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSettings.showTransmitLogLocations}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  showTransmitLogLocations: e.target.checked,
+                });
+              }}
+            />
+          }
+          label="Locations"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSettings.showTransmitLogPostals}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  showTransmitLogPostals: e.target.checked,
+                });
+              }}
+            />
+          }
+          label="Postals"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={selectedSettings.showTransmitLogTimestamps}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  showTransmitLogTimestamps: e.target.checked,
+                });
+              }}
+            />
+          }
+          label="Timestamps"
+        />
+      </FormControl>
+      <FormControl>
+        <FormLabel sx={{ mt: 1 }}>Stay On Top (Requires Restart)</FormLabel>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={selectedSettings.stayOnTop}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  stayOnTop: e.target.checked,
+                });
+              }}
+            />
+          }
+          label={selectedSettings.stayOnTop ? "Enabled" : "Disabled"}
+        />
+      </FormControl>
+      <FormControl>
         <FormLabel sx={{ mb: 1 }}>Sonoran Websocket URL</FormLabel>
         <TextField
           sx={{ pr: 1 }}

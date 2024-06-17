@@ -5,8 +5,8 @@ import postals from "./configs/postals.json";
 export const CONFIG_VERSION = "0.2.4";
 export const LOCATIONS_VERSION = "0.2.4";
 export const POSTALS_VERSION = "0.3.2";
-export const SETTINGS_VERSION = "0.2.4";
-export const STATE_VERSION = "0.2.4";
+export const SETTINGS_VERSION = "0.3.3";
+export const STATE_VERSION = "0.3.3";
 
 export type ConfigSchemaType = {
   config: ConfigType;
@@ -38,6 +38,11 @@ export type SettingsType = {
   sonoranWebSocketUrl: string;
   frequenciesSection: boolean;
   transmitLogSection: boolean;
+  showTransmitLogIcons: boolean;
+  showTransmitLogLocations: boolean;
+  showTransmitLogPostals: boolean;
+  showTransmitLogTimestamps: boolean;
+  stayOnTop: boolean;
   autoUpdate: boolean;
 };
 
@@ -48,6 +53,7 @@ export type StateSchemaType = {
 
 export type StateType = {
   filters: FiltersConfig;
+  lastWelcomeVersion: string;
 };
 
 export type FrequencyConfig = {
@@ -107,6 +113,11 @@ const settingsStore = new Store<SettingsSchemaType>({
       sonoranWebSocketUrl: "ws://[::1]:33802",
       frequenciesSection: true,
       transmitLogSection: true,
+      showTransmitLogIcons: true,
+      showTransmitLogLocations: true,
+      showTransmitLogPostals: true,
+      showTransmitLogTimestamps: true,
+      stayOnTop: false,
       autoUpdate: true,
     },
   },
@@ -119,6 +130,7 @@ const stateStore = new Store<StateSchemaType>({
     config: {
       filters: {
         canHear: true,
+        lastWelcomeVersion: "",
       },
     },
   },
