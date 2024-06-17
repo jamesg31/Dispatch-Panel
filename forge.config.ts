@@ -1,6 +1,7 @@
 import type { ForgeConfig } from "@electron-forge/shared-types";
 import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerDMG } from "@electron-forge/maker-dmg";
+import { MakerZIP } from "@electron-forge/maker-zip";
 import { AutoUnpackNativesPlugin } from "@electron-forge/plugin-auto-unpack-natives";
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
@@ -23,7 +24,13 @@ const config: ForgeConfig = {
     },
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerDMG({})],
+  makers: [
+    new MakerSquirrel({
+      signWithParams: `/sha1 ${process.env.WINDOWS_CERT_SHA1} /tr http://time.certum.pl /td sha256 /fd sha256`,
+    }),
+    new MakerDMG({}),
+    new MakerZIP({}),
+  ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({

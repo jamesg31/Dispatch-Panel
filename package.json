@@ -1,7 +1,7 @@
 {
   "name": "dispatch-panel",
   "productName": "Dispatch Panel",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A 3rd party Sonoran Radio Dispatch Panel",
   "main": ".webpack/main",
   "repository": {
@@ -52,6 +52,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@electron-forge/maker-zip": "^7.4.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.13",

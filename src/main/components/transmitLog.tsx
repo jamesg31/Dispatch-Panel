@@ -34,7 +34,7 @@ const TransmitLog = () => {
   const [maxHeight, setMaxHeight] = React.useState(0);
   const [canHearChecked, setCanHearChecked] = React.useState(false);
   const sonoranWebSocket = useSonoranWebSocket();
-  const { config, locations } = useStore();
+  const { config, locations, postals } = useStore();
   const listRef = React.useRef(null);
   const { height, width } = useWindowDimensions();
 
@@ -59,6 +59,21 @@ const TransmitLog = () => {
       }
     }
     return closestLocation.name;
+  };
+
+  const getPostal = (x: number, y: number): string => {
+    let closestPostal;
+    let closestDistance;
+    for (const postal of postals) {
+      let distance = Math.sqrt(
+        Math.pow(x - postal.x, 2) + Math.pow(y - postal.y, 2)
+      );
+      if (distance < closestDistance || closestDistance == null) {
+        closestPostal = postal;
+        closestDistance = distance;
+      }
+    }
+    return closestPostal.label;
   };
 
   const onSonoranWebSocketMessage = React.useCallback((event: MessageEvent) => {
@@ -138,7 +153,7 @@ const TransmitLog = () => {
                   secondary={
                     (getChannel(log.xmit) || "Unknown Channel") +
                     (log.game
-                      ? " | " + getLocation(log.game.x, log.game.y)
+                      ? " | " + getLocation(log.game.x, log.game.y) + " (" + getPostal(log.game.x, log.game.y) + ")"
                       : "")
                   }
                   sx={{
