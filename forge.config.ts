@@ -48,6 +48,14 @@ const config: ForgeConfig = {
               js: "./src/preload.ts",
             },
           },
+          {
+            html: "./src/welcome/index.html",
+            js: "./src/welcome/renderer.ts",
+            name: "welcome_window",
+            preload: {
+              js: "./src/preload.ts",
+            },
+          },
         ],
       },
     }),
