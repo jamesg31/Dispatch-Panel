@@ -42,6 +42,7 @@ export type SettingsType = {
   showTransmitLogLocations: boolean;
   showTransmitLogPostals: boolean;
   showTransmitLogTimestamps: boolean;
+  stayOnTop: boolean;
   autoUpdate: boolean;
 };
 
@@ -116,6 +117,7 @@ const settingsStore = new Store<SettingsSchemaType>({
       showTransmitLogLocations: true,
       showTransmitLogPostals: true,
       showTransmitLogTimestamps: true,
+      stayOnTop: false,
       autoUpdate: true,
     },
   },

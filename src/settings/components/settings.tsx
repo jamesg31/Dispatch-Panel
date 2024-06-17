@@ -160,6 +160,23 @@ const Settings = () => {
         />
       </FormControl>
       <FormControl>
+        <FormLabel sx={{ mt: 1 }}>Stay On Top (Requires Restart)</FormLabel>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={selectedSettings.stayOnTop}
+              onChange={(e) => {
+                setSelectedSettings({
+                  ...selectedSettings,
+                  stayOnTop: e.target.checked,
+                });
+              }}
+            />
+          }
+          label={selectedSettings.stayOnTop ? "Enabled" : "Disabled"}
+        />
+      </FormControl>
+      <FormControl>
         <FormLabel sx={{ mb: 1 }}>Sonoran Websocket URL</FormLabel>
         <TextField
           sx={{ pr: 1 }}

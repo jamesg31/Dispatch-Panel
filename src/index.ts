@@ -188,6 +188,11 @@ app.on("ready", async () => {
 
   mainWindow = createMainWindow();
 
+  // @ts-ignore
+  if (settingsStore.get("config.stayOnTop") === true) {
+    mainWindow.setAlwaysOnTop(true);
+  }
+
   electronLocalShortcut.register("CmdOrCtrl+S", () => {
     if (settingsWindow) {
       settingsWindow.focus();
