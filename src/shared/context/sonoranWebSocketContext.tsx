@@ -1,6 +1,6 @@
 import { Alert, Button } from "@mui/material";
 import * as React from "react";
-import useStore from "../../shared/hooks/useStore";
+import useStore from "../hooks/useStore";
 
 export interface Controller {
   cid: number;

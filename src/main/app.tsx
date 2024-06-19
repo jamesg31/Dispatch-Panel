@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import Theme from "../shared/components/theme";
-import { SonoranWebSocketProvider } from "./context/sonoranWebSocketContext";
+import { SonoranWebSocketProvider } from "../shared/context/sonoranWebSocketContext";
 import { StoreContextProvider } from "../shared/context/storeContext";
 import ConfiguredApp from "./components/configuredApp";
 

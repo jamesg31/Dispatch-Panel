@@ -63,6 +63,14 @@ const config: ForgeConfig = {
               js: "./src/preload.ts",
             },
           },
+          {
+            html: "./src/units/index.html",
+            js: "./src/units/renderer.ts",
+            name: "units_window",
+            preload: {
+              js: "./src/preload.ts",
+            },
+          },
         ],
       },
     }),

@@ -1,5 +1,5 @@
 import * as React from "react";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../../shared/hooks/useWindowDimensions";
 import {
   List,
   ListItem,
@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import DepartmentIcon from "./departmentIcon";
-import useSonoranWebSocket from "../hooks/useSonoranWebSocket";
+import useSonoranWebSocket from "../../shared/hooks/useSonoranWebSocket";
 import useStore from "../../shared/hooks/useStore";
 import FilterMenu from "./filterMenu";
 

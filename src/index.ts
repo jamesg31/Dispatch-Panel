@@ -32,11 +32,14 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 declare const SETTINGS_WINDOW_WEBPACK_ENTRY: string;
 declare const SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare const UNITS_WINDOW_WEBPACK_ENTRY: string;
+declare const UNITS_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 declare const WELCOME_WINDOW_WEBPACK_ENTRY: string;
 declare const WELCOME_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 let mainWindow: BrowserWindow | null = null;
 let settingsWindow: BrowserWindow | null = null;
+let unitsWindow: BrowserWindow | null = null;
 let welcomeWindow: BrowserWindow | null = null;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -154,6 +157,26 @@ const createSettingsWindow = (parent: BrowserWindow): BrowserWindow => {
   return settingsWindow;
 };
 
+const createUnitsWindow = (parent: BrowserWindow): BrowserWindow => {
+  // Create the browser window.
+  const unitsWindow = new BrowserWindow({
+    height: 500,
+    width: 500,
+    webPreferences: {
+      preload: UNITS_WINDOW_PRELOAD_WEBPACK_ENTRY,
+    },
+    parent: parent,
+  });
+
+  // remove default menu bar
+  unitsWindow.removeMenu();
+
+  // and load the index.html of the app.
+  unitsWindow.loadURL(UNITS_WINDOW_WEBPACK_ENTRY);
+
+  return unitsWindow;
+};
+
 const createWelcomeWindow = (parent: BrowserWindow): BrowserWindow => {
   // Create the browser window.
   const welcomeWindow = new BrowserWindow({
@@ -200,6 +223,17 @@ app.on("ready", async () => {
       settingsWindow = createSettingsWindow(mainWindow);
       settingsWindow.addListener("close", () => {
         settingsWindow = null;
+      });
+    }
+  });
+
+  electronLocalShortcut.register("CmdOrCtrl+U", () => {
+    if (unitsWindow) {
+      unitsWindow.focus();
+    } else {
+      unitsWindow = createUnitsWindow(mainWindow);
+      unitsWindow.addListener("close", () => {
+        unitsWindow = null;
       });
     }
   });

@@ -10,9 +10,12 @@ import {
   Button,
 } from "@mui/material";
 import useStore from "../../shared/hooks/useStore";
-import useSonoranWebSocket from "../hooks/useSonoranWebSocket";
+import useSonoranWebSocket from "../../shared/hooks/useSonoranWebSocket";
 import { FrequencyConfig } from "../../config";
-import { Controller, Frequency } from "../context/sonoranWebSocketContext";
+import {
+  Controller,
+  Frequency,
+} from "../../shared/context/sonoranWebSocketContext";
 
 const getFrequencies = (frequencies: FrequencyConfig[]) => {
   return frequencies.map((frequency: FrequencyConfig, i) => {
